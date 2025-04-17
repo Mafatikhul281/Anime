@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1280px, initial-scale=1.0"/>
+  <title>{{anime.title}}</title>
+ <style>
+body {
+  margin: 0;
+  background-color: #121212;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  color: white;
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  width: 1280px;
+  font-size: 2.5rem;
+  color: #ff6f61;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 10px rgba(255, 111, 97, 0.4);
+}
+
+h2 {
+  width: 1280px;
+  font-size: 2.5rem;
+  color: #ff4081;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 10px rgba(255, 111, 97, 0.4);
+  font-weight: bold;
+}	
+
+p {
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+button {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 150px;
+  height: 45px;
+  position: relative;
+  left: 150px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  background: linear-gradient(to right, #ff6f61, #ff9966);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(255, 153, 102, 0.3);
+}
+
+iframe {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  margin-bottom: 40px;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+<h1>{{ anime.title }}</h1>
+
+{% if current_ep %}
+    <h2>
+        EPISODE {{ current_ep[2:] }}
+    </h2>
+{% endif %}
+    {% if show_iframe %}
+      <iframe id="embed" src="/embed_video" height="720" width="1280" frameborder="0" allowfullscreen></iframe>
+    {% else %}
+      <p>Pilih Episode</p>        
+    {% endif %}
+    <form action="{{ url_for('anime', id=id) }}" method="POST">
+      {% for key, value in anime.items() %}
+        {% if key.startswith('ep') %}
+          <button type="submit" name="ep" value="{{ value }}">EPISODE {{loop.index}}</button>
+        {% endif %}
+      {% endfor %}
+    </form>
+  </div>
+</body>
+</html>

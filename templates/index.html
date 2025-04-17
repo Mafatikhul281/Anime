@@ -1,1 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daftar Anime</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: sans-serif;
+    }
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px;
+    }
+    .filter-buttons button {
+      padding: 10px 20px;
+      background-color: #1e1e1e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .filter-buttons button:hover {
+      background-color: #444;
+    }
+    .anime-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .anime-card {
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .anime-card:hover {
+      transform: scale(1.03);
+    }
+    .anime-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+    .anime-card a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">Daftar Anime</h1>
 
+  <!-- Filter Buttons -->
+  <div class="filter-buttons">
+    <form action="/" method="get">
+      <button type="submit" name="jenis" value="Anime">Anime</button>
+      <button type="submit" name="jenis" value="Anime2">Hentai</button>
+    </form>
+  </div>
+
+  <!-- Anime Grid -->
+ <div class="anime-grid">
+  {% if anime_list %}
+    {% for id, anime in anime_list.items() %}
+    <div class="anime-card">
+      <a href="{{ url_for('anime', id=id) }}">
+        <img src="{{ anime.image }}">
+        {{ anime.title }}
+      </a>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p style="text-align: center;">Silakan pilih Jenis untuk melihat daftar anime.</p>
+  {% endif %}
+</div>
+</body>
+</html>
